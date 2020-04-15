@@ -44,53 +44,14 @@ class PropertiesController extends Controller
     public function store(Request $request)
     {
         $this->validateProperty($request);
-        $filenameWithExt = $request->file('photo')->getClientOriginalName();
-
-        // Get Just the Filename
-        $filename = pathinfo($filenameWithExt , PATHINFO_FILENAME);
-
-        // GEt Extension
-        $extension = $request->file('photo')->getClientOriginalExtension();
-
-        // Create New FileName
-        $filenameToSave = $filenameWithExt.'_'.time().'.'.$extension;
         
-        $path = "public/photos/".$request->input('property_id') ;
-
-        $request->file('photo')->storeAs($path , $filenameToSave);
-
         $property = new Property;
-        $property->user_id = Auth::user()->id;
-        $property->square = $request->input('square');
-        $property->bathroom = $request->input('bathroom');
-        $property->bedroom = $request->input('bedroom');
-        $property->garage = $request->input('garage');
-        $property->old = $request->input('old');
-        $property->description = $request->input('description');
-        $property->address = $request->input('address');
-        $property->price = $request->input('price');
-        $property->rent_sale = $request->input('rent_sale');
-        $property->photo = $filenameToSave;
-        $property->city_id =$request->input('city_id');
-        $property->kind_id =$request->input('kind_id');
-        
 
-        // Modify the counter in City Class
-            $city = City::findOrFail($request->input('city_id'));
-            $city->number_of_properties ++ ;
-            $city->save();
+        $this->changingNumberOfProperties($property , $request , 0) ;
 
+        $this->save($property , $request);
 
-        // Modify the counter in City Class
-            // $kind = Kind::findOrFail($request->input('city_id'));
-            // $kind->number_of_properties ++ ;
-            // $kind->save();
-            
-        $property->save();
-
-        $property->details()->attach(request('details'));
         return redirect('/' . Auth::user()->email);
-
     }
 
     /**
@@ -138,53 +99,13 @@ class PropertiesController extends Controller
         $this->validateProperty($request);
 
         $property = Property::findOrFail($id);
-        $old_city_id = $property->city_id;
-        $filenameToSave = NULL;
-        if($request->has('photo')){
 
-            Storage::delete('public/photos/' . $property->photo);
-            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+        $this->changingNumberOfProperties($property , $request , $property->city_id);
 
-            // Get Just the Filename
-            $filename = pathinfo($filenameWithExt , PATHINFO_FILENAME);
+        $this->save($property , $request);
 
-            // GEt Extension
-            $extension = $request->file('photo')->getClientOriginalExtension();
-            
-            // Create New FileName
-            $filenameToSave = $filenameWithExt.'_'.time().'.'.$extension;
-            
-            $path = "public/photos/".$request->input('property_id') ;
 
-            $request->file('photo')->storeAs($path , $filenameToSave);
-        }
-
-        $property->user_id = Auth::user()->id;
-        $property->square = $request->input('square');
-        $property->bathroom = $request->input('bathroom');
-        $property->bedroom = $request->input('bedroom');
-        $property->garage = $request->input('garage');
-        $property->kind_id = $request->input('kind_id');
-        $property->old = $request->input('old');
-        $property->city_id = $request->input('city_id');
-        $property->address = $request->input('address');
-        $property->price = $request->input('price');
-        $property->rent_sale = $request->input('rent_sale');
-        if($filenameToSave)
-            $property->photo = $filenameToSave;
-        $property->description = $request->input('description');
-        $property->save();
-
-        $city = City::findOrFail($request->input('city_id'));
-        if($city->id != $old_city_id){
-            $old_city = City::findOrFail($old_city_id);
-            $old_city->number_of_properties -- ;
-            $old_city->save();
-            $city->number_of_properties ++ ;
-            $city->save();
-        }
-        $property->details()->sync(request('details'));
-        return redirect('/' . Auth::user()->email);
+        return redirect('/property/' . $property->id);
     }
 
     /**
@@ -196,6 +117,7 @@ class PropertiesController extends Controller
     public function destroy($id)
     {
         $property = Property::findOrFail($id);
+
         Storage::delete('public/photos/' . $property->photo);
         $city = City::findOrFail($property->city_id);
         $city->number_of_properties -- ;
@@ -217,6 +139,77 @@ class PropertiesController extends Controller
             'kind_id' => 'required',
             'photo' => 'image|dimensions:max_width=350,max_height=350|max:1999',
         ]);
+    }
+
+    // Save The data to DB 
+    public function save(Property $property , Request $request)
+    {
+        
+        $property->user_id = Auth::user()->id ;
+        $property->square = $request->input('square');
+        $property->bathroom = $request->input('bathroom');
+        $property->bedroom = $request->input('bedroom');
+        $property->garage = $request->input('garage');
+        $property->kind_id = $request->input('kind_id');
+        $property->old = $request->input('old');
+        $property->city_id = $request->input('city_id');
+        $property->address = $request->input('address');
+        $property->price = $request->input('price');
+        $property->rent_sale = $request->input('rent_sale');
+        $property->photo = $this->savingImage($request , $property);
+        $property->description = $request->input('description');
+        $property->save();
+        
+        
+        $property->details()->sync(request('details'));
+    }
+
+    //Checking is there image added , and return the name of the file to be saved
+    public function savingImage(Request $request , Property $property)
+    {
+        $filenameToSave = 'final.jpg';
+        if($request->has('photo')){
+
+            Storage::delete('public/photos/' . $property->photo);
+            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+
+            // Get Just the Filename
+            $filename = pathinfo($filenameWithExt , PATHINFO_FILENAME);
+
+            // GEt Extension
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            
+            // Create New FileName
+            $filenameToSave = $filenameWithExt.'_'.time().'.'.$extension;
+            
+            $path = "public/photos/".$request->input('property_id') ;
+
+            $request->file('photo')->storeAs($path , $filenameToSave);
+        }
+        return $filenameToSave;
+    }
+
+    public function changingNumberOfProperties(Property $property, Request $request , $old_id)
+    {
+
+        $old_city_id = $old_id;
+        
+        
+        $city = City::find($request->input('city_id'));
+
+        if($city->id != $old_city_id && !$request->is('property')){
+            $old_city = City::findOrFail($old_city_id);
+            $old_city->number_of_properties -- ;
+            $old_city->save();
+            $city->number_of_properties ++ ;
+            $city->save();
+        }
+        else
+        {
+       
+            $city->number_of_properties ++ ;
+            $city->save();
+        }
     }
     
 }
