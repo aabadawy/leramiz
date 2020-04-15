@@ -1,6 +1,6 @@
 <!-- Footer section -->
 @php
-	$cities = App\City::all();
+	$cities = App\City::orderBy('number_of_properties' , 'desc')->get();
 @endphp
 <footer class="footer-section set-bg" data-setbg="{{asset('css/img/footer-bg.jpg')}}">
 	<div class="container">

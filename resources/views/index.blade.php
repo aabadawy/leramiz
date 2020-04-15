@@ -213,7 +213,7 @@
 				<a href="/property?city={{$city->name}}" class="gallery-item  set-bg" data-setbg="css/img/gallery/1.jpg">
 					<div class="gi-info">
 						<h3>{{$city->name}}</h3>
-						<p>{{count($city->properties)}}</p>
+						<p>{{$city->number_of_properties}}</p>
 					</div>
 				</a>
 			@empty

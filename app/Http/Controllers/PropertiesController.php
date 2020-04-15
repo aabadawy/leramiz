@@ -73,6 +73,19 @@ class PropertiesController extends Controller
         $property->photo = $filenameToSave;
         $property->city_id =$request->input('city_id');
         $property->kind_id =$request->input('kind_id');
+        
+
+        // Modify the counter in City Class
+            $city = City::findOrFail($request->input('city_id'));
+            $city->number_of_properties ++ ;
+            $city->save();
+
+
+        // Modify the counter in City Class
+            // $kind = Kind::findOrFail($request->input('city_id'));
+            // $kind->number_of_properties ++ ;
+            // $kind->save();
+            
         $property->save();
 
         $property->details()->attach(request('details'));
@@ -125,6 +138,7 @@ class PropertiesController extends Controller
         $this->validateProperty($request);
 
         $property = Property::findOrFail($id);
+        $old_city_id = $property->city_id;
         $filenameToSave = NULL;
         if($request->has('photo')){
 
@@ -160,6 +174,15 @@ class PropertiesController extends Controller
             $property->photo = $filenameToSave;
         $property->description = $request->input('description');
         $property->save();
+
+        $city = City::findOrFail($request->input('city_id'));
+        if($city->id != $old_city_id){
+            $old_city = City::findOrFail($old_city_id);
+            $old_city->number_of_properties -- ;
+            $old_city->save();
+            $city->number_of_properties ++ ;
+            $city->save();
+        }
         $property->details()->sync(request('details'));
         return redirect('/' . Auth::user()->email);
     }
@@ -174,6 +197,9 @@ class PropertiesController extends Controller
     {
         $property = Property::findOrFail($id);
         Storage::delete('public/photos/' . $property->photo);
+        $city = City::findOrFail($property->city_id);
+        $city->number_of_properties -- ;
+        $city->save();
         $property->delete();
             return redirect('/');
     }
