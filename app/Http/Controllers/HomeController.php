@@ -39,63 +39,34 @@ class HomeController extends Controller
     }
     public function profile($email)
     {
-        $id = Null ;
+        
+        $user = User::where('email' , $email)->firstOr(function(){
+            return abort(404);
+        });
+        
         $details = Detail::all()->pluck('name' , 'id');
         $citiess = City::all()->pluck('name' , 'name');
         $kinds = Kind::all()->pluck('name' , 'name');
         $users = User::all();
-
-
-        foreach ($users as $user) {
-            if($user->email === $email)
-                $id = $user->id;
-        }
-        
-        $allKindProp = Property::all()->get('kind');
-        $allRentSaleProp = Property::all()->get('rent_sale');
-        $relatedProperty = Property::all()->where([
-            'kind' => $allKindProp,
-            'rent_sale' => $allRentSaleProp,
-        ]);
-        $user = User::findOrFail($id);
-        if(Auth::user()->roles->contains('name' , 'client') && Auth::user()->id == $id)
+        if(!Auth::guest())
         {
-            return view('guest',[
-                'kinds' => $kinds,
-                'details' => $details,
-                'citiess' => $citiess,
-                'user' => $user,
-                'relatedProperty' => $relatedProperty,
-            ]);
+                if(Auth::user()->roles->contains('name' , 'client') && Auth::user()->id == $user->$id)
+                {
+                    return view('guest',[
+                        'kinds' => $kinds,
+                        'details' => $details,
+                        'citiess' => $citiess,
+                        'user' => $user,
+                    ]);
+                }
         }
         else
         {
             return view('guest',[
                 'user' => $user ,
-                'relatedProperty' => $relatedProperty,
             ]);
         }
 
-        // if(!Auth::guest()){
-        //     if(Auth::user()->id == $id)
-        //     {
-        //         return view('agent',[
-        //             'details' => $details,
-        //             'citiess' => $citiess,
-        //             'cities' => $cities,
-        //             'kinds' => $kinds,
-        //             'user' => $user,
-        //         ]);
-        //     }
-        //     else{
-        //         return view('guest',[
-        //             'user' => $user ,
-        //             'properties' => $user->properties,
-        //             'relatedProperty' => $relatedProperty,
-        //         ]);
-        //     }
-        // }
-        // else
             
     }
 }

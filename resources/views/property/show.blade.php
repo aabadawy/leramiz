@@ -67,7 +67,7 @@
                         <img class="author-img set-bg" src="{{asset('css/img/author.jpg')}}" alt="$property->user->name">
                     </a>
                     <div class="author-info">
-                        <h5><a href="/{{$property->user->email}}" class="">{{$property->user->name}}</a></h5>
+                        <h5><a href="/{{$property->user->email}}" class="text-success">{{$property->user->name}}</a></h5>
                         <p>Real Estate Agent</p>
                     </div>
                     <div class="author-contact">

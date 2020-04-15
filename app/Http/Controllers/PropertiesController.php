@@ -32,6 +32,7 @@ class PropertiesController extends Controller
         return view('property.index' ,[
             'properties' => $properties,
         ]);
+        
     }
 
 
@@ -206,9 +207,11 @@ class PropertiesController extends Controller
         }
         else
         {
-       
-            $city->number_of_properties ++ ;
-            $city->save();
+            if($request->is('property'))
+            {
+                $city->number_of_properties ++ ;
+                $city->save();
+            }
         }
     }
     

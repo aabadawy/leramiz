@@ -7,8 +7,7 @@
 						<div class="top-info">
 							@if(!Auth::guest())
 							<a href="/{{Auth::user()->email}}"> <h3 class="text-success">{{Auth::user()->name}}</b></h3>
-							@else
-								<p>Welcome</p>
+							
 							@endif
 						</div>
 					</div>
