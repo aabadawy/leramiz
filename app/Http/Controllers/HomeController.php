@@ -48,7 +48,7 @@ class HomeController extends Controller
         $citiess = City::all()->pluck('name' , 'name');
         $kinds = Kind::all()->pluck('name' , 'name');
         $users = User::all();
-        if(!Auth::guest())
+        if(Auth::guest())
         {
                 if(Auth::user()->roles->contains('name' , 'client') && Auth::user()->id == $user->$id)
                 {

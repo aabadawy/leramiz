@@ -84,24 +84,6 @@
                         <button>SEND</button>
                     </form>
                 </div>
-                <div class="related-properties">
-                    <h2>Related Property</h2>
-                    @forelse($relatedProperty as $relprop)
-                        @if($relprop->id != $property->id)
-                            <div class="rp-item">
-                                <div class="rp-pic set-bg" data-setbg="/storage/photos/{{$property->photo}}">
-                                    <div class="{{$relprop->rent_sale === 'sale' ?'sale-notic' : 'rent-notic'}}">For {{$relprop->rent_sale}}</div>
-                                </div>
-                                <div class="rp-info">
-                                    <h5>{{$relprop->address}}</h5>
-                                    <p><i class="fa fa-map-marker"></i>{{$relprop->city}}</p>
-                                </div>
-                                <a href="/property/{{$relprop->id}}" class="rp-price">${{$relprop->price}}{{$relprop->rent_sale === 'rent' ? '/month' : '' }}</a>
-                            </div>
-                        @endif
-                    @empty
-                    @endforelse
-                </div>
             </div>
         </div>
     </div>
