@@ -138,7 +138,6 @@ class PropertiesController extends Controller
             'address' => 'required|string|min:10',
             'price' => 'required|integer',
             'kind_id' => 'required',
-            'photo' => 'image|max:1999',
         ]);
     }
 

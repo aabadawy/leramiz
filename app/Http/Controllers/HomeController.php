@@ -29,7 +29,8 @@ class HomeController extends Controller
     public function index()
     {
         $properties = Property::orderBy('created_at' ,'desc')->get();
-        $cities = City::all();
+        $cities = City::orderBy('number_of_properties' , 'desc')->take(4)->get();;
+
         $kinds = Kind::all();
         return view('index',[
             'properties' => $properties,
@@ -50,7 +51,7 @@ class HomeController extends Controller
         $users = User::all();
         if(Auth::guest())
         {
-                if(Auth::user()->roles->contains('name' , 'client') && Auth::user()->id == $user->$id)
+                if(Auth::user()->roles->contains('name' , 'Customer') && Auth::user()->id == $user->$id)
                 {
                     return view('guest',[
                         'kinds' => $kinds,

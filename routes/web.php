@@ -18,7 +18,3 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('/property' , 'PropertiesController',['only' => ['index', 'show', 'store' , 'edit' , 'update' , 'destroy']]);
 Route::get('/{email}' , 'HomeController@profile');
 
-Route::get('/test/test', function(){
-    $user = App\User::find(1);
-    return $user->properties();
-});

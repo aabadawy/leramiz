@@ -101,7 +101,7 @@
 			<p>Browse houses and flats for sale and to rent in your area</p>
 			</div>
 			<div class="row">
-			@foreach($properties as $property)
+			@foreach($properties->take(9) as $property)
 				<div class="col-lg-4 col-md-6">
 					<!-- feature -->
 					<div class="feature-item">
@@ -187,7 +187,7 @@
 			@forelse($kinds as $kind)
 				<div class="col-lg-3 col-md-6 f-cata">
 					<a href="#">
-						<img src="css/img/feature-cate/1.jpg" alt="">
+						<img src="/storage/{{$kind->image}}" alt="">
 						<h5>{{$kind->name}}</h5>
 					</a>
 				</div>
@@ -210,7 +210,7 @@
 		<div class="gallery">
 			<div class="grid-sizer"></div>
 			@forelse($cities as $city)
-				<a href="/property?city={{$city->name}}" class="gallery-item  set-bg" data-setbg="css/img/gallery/1.jpg">
+				<a href="/property?city={{$city->name}}" class="gallery-item  set-bg" data-setbg="/storage/{{$city->image}}">
 					<div class="gi-info">
 						<h3>{{$city->name}}</h3>
 						<p>{{$city->number_of_properties}}</p>

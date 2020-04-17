@@ -25,7 +25,7 @@ class CreatePropertiesTable extends Migration
             $table->string('address');
             $table->integer('price');
             $table->string('rent_sale');
-            $table->string('photo');
+            $table->string('photo')->default('np.jpg');
             $table->timestamp('sold_at')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
