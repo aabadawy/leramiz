@@ -181,7 +181,7 @@ return [
 
     // Set this to false if you would like to skip adding the dashboard routes
     // (you then need to overwrite the login route on your AuthController)
-    'setup_dashboard_routes' => true,
+    'setup_dashboard_routes' => false,
 
     // Set this to false if you would like to skip adding "my account" routes
     // (you then need to manually define the routes in your web.php)
@@ -217,6 +217,7 @@ return [
     // The guard that protects the Backpack admin panel.
     // If null, the config.auth.defaults.guard value will be used.
     'guard' => null,
+    //'backpack',
 
     // The password reset configuration for Backpack.
     // If null, the config.auth.defaults.passwords value will be used.

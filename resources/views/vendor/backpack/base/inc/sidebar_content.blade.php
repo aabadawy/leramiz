@@ -5,3 +5,4 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('city') }}'><i class='nav-icon fa fa-question'></i> Cities</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('user') }}'><i class='nav-icon fa fa-question'></i> Users</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('kind') }}'><i class='nav-icon fa fa-question'></i> Kinds</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('role') }}'><i class='nav-icon fa fa-question'></i> Roles</a></li>

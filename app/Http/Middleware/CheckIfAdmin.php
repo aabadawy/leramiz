@@ -38,7 +38,7 @@ class CheckIfAdmin
         if ($request->ajax() || $request->wantsJson()) {
             return response(trans('backpack::base.unauthorized'), 401);
         } else {
-            return redirect()->guest(backpack_url('login'));
+            return abort(404);
         }
     }
 
@@ -50,10 +50,21 @@ class CheckIfAdmin
      *
      * @return mixed
      */
+    
     public function handle($request, Closure $next)
     {
-        if (backpack_auth()->guest()) {
+        // Here I changed The Way that function check is the user is Admin or not.
+        
+        if(!auth()->guest()){
+            if (!auth()->user()->roles->contains('name' , 'Admin') && 
+                !auth()->user()->roles->contains('name' , 'Data Entry')) {
+                return $this->respondToUnauthorizedRequest($request);
+            }
+            
+        }
+        else{
             return $this->respondToUnauthorizedRequest($request);
+
         }
 
         if (! $this->checkIfUserIsAdmin(backpack_user())) {
