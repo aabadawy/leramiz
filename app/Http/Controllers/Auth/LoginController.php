@@ -35,7 +35,7 @@ class LoginController extends Controller
         } else if ($user->roles->contains('name' , 'Customer')) {
             return redirect('/');
         } else {
-            return redirect('/blog');
+            return redirect('/');
         }
    }
 

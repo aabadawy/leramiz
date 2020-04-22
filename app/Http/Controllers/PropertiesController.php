@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Storage;
 use App\Property;
 use Auth;
-use App\Detail;
-use App\City;
+use App\Models\Detail;
+use App\Models\City;
 
 class PropertiesController extends Controller
 {
@@ -119,7 +120,7 @@ class PropertiesController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        Storage::delete('public/photos/' . $property->photo);
+        Storage::delete('public/' . $property->image);
         $city = City::findOrFail($property->city_id);
         $city->number_of_properties -- ;
         $city->save();
@@ -138,6 +139,7 @@ class PropertiesController extends Controller
             'address' => 'required|string|min:10',
             'price' => 'required|integer',
             'kind_id' => 'required',
+            'image' => 'max:1999'
         ]);
     }
 
@@ -156,7 +158,7 @@ class PropertiesController extends Controller
         $property->address = $request->input('address');
         $property->price = $request->input('price');
         $property->rent_sale = $request->input('rent_sale');
-        $property->photo = $this->savingImage($request , $property);
+        $property->image = $this->savingImage($request , $property);
         $property->description = $request->input('description');
         $property->save();
         
@@ -168,23 +170,23 @@ class PropertiesController extends Controller
     public function savingImage(Request $request , Property $property)
     {
         $filenameToSave = 'final.jpg';
-        if($request->has('photo')){
+        if($request->has('image')){
 
-            Storage::delete('public/photos/' . $property->photo);
-            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+            Storage::delete('public/' . $property->image);
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
 
             // Get Just the Filename
             $filename = pathinfo($filenameWithExt , PATHINFO_FILENAME);
 
             // GEt Extension
-            $extension = $request->file('photo')->getClientOriginalExtension();
+            $extension = $request->file('image')->getClientOriginalExtension();
             
             // Create New FileName
-            $filenameToSave = $filenameWithExt.'_'.time().'.'.$extension;
+            $filenameToSave ='photos/'. $filenameWithExt.'_'.time().'.'.$extension;
             
-            $path = "public/photos/".$request->input('property_id') ;
+            $path = "public/";
 
-            $request->file('photo')->storeAs($path , $filenameToSave);
+            $request->file('image')->storeAs($path , $filenameToSave);
         }
         return $filenameToSave;
     }

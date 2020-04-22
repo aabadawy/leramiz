@@ -39,7 +39,7 @@ class UserCrudController extends CrudController
             'name' => 'role_id', // the column that contains the ID of that connected entity;
             'entity' => 'roles', // the method that defines the relationship in your Model
             'attribute' => "name", // foreign key attribute that is shown to user
-            'model' => "App\Role", // foreign key model
+            'model' => "App\Models\Role", // foreign key model
          ]);
          
     }
@@ -61,7 +61,7 @@ class UserCrudController extends CrudController
             'name' => 'roles', // the method that defines the relationship in your Model
             'entity' => 'roles', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\Role", // foreign key model
+            'model' => "App\Models\Role", // foreign key model
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
         
            // optional
@@ -87,7 +87,7 @@ class UserCrudController extends CrudController
             'name' => 'roles', // the method that defines the relationship in your Model
             'entity' => 'roles', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\Role", // foreign key model
+            'model' => "App\Models\Role", // foreign key model
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
         
            // optional

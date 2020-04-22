@@ -18,7 +18,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- feature -->
                     <div class="feature-item">
-                        <div class="feature-pic set-bg" data-setbg="/storage/photos/{{$property->photo}}">
+                        <div class="feature-pic set-bg" data-setbg="/storage/{{$property->image}}">
                             <div class="{{$property->rent_sale === 'sale' ? 'sale-notic' : 'rent-notic'}}">FOR {{$property->rent_sale === 'sale' ? 'sale' : 'rent'}}</div>
                         </div>
                         <div class="feature-text">

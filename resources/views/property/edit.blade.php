@@ -1,6 +1,6 @@
 @php
-    $kinds = App\Kind::all()->pluck('name' , 'id');
-    $cities = App\City::all()->pluck('name' , 'id');
+    $kinds = App\Models\Kind::all()->pluck('name' , 'id');
+    $cities = App\Models\City::all()->pluck('name' , 'id');
 @endphp
 @extends('layouts.app')
 
@@ -92,8 +92,8 @@
                         @enderror
                     </div>
                     <div class="form-group col-12">
-                        {{Form::file('photo',[] ,['class' => 'custom-file-input'])}}
-                        @error('photo')
+                        {{Form::file('image',[] ,['class' => 'custom-file-input'])}}
+                        @error('image')
                             <p class="text-danger text-xs">{{$message}}</p>
                         @enderror
                     </div>

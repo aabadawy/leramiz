@@ -14,7 +14,7 @@ class AddNumberOfPropertiesToKinds extends Migration
     public function up()
     {
         Schema::table('kinds', function (Blueprint $table) {
-            $table->integer('number_of_kinds')->default(0);
+            $table->integer('number_of_properties')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddNumberOfPropertiesToKinds extends Migration
     public function down()
     {
         Schema::table('kinds', function (Blueprint $table) {
-            $table->integer('number_of_kinds')->default(0);
+            $table->integer('number_of_properties')->default(0);
         });
     }
 }

@@ -1,7 +1,7 @@
 @php 
-    $details = App\Detail::all()->pluck('name' , 'id');
-    $cities = App\City::all()->pluck('name' , 'id');
-    $kinds = App\Kind::all()->pluck('name' , 'id');
+    $details = App\Models\Detail::all()->pluck('name' , 'id');
+    $cities = App\Models\City::all()->pluck('name' , 'id');
+    $kinds = App\Models\Kind::all()->pluck('name' , 'id');
 @endphp
 <div class="site-breadcrumb">
     <div class="container">
@@ -89,8 +89,8 @@
                     {{Form::select('rent_sale' , ['rent' => 'Rent' , 'sale' => 'Sale'],'' , ['class' => 'form-control' ])}}
                 </div>
                 <div class="form-group col-12">
-                    {{Form::file('photo',[] )}}
-                    @error('photo')
+                    {{Form::file('image',[] )}}
+                    @error('image')
                         <p class="text-danger text-xs">{{$message}}</p>
                     @enderror
                 </div>

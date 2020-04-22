@@ -27,7 +27,7 @@
             <div class="col-lg-8 single-list-page">
                     @foreach($user->properties as $property)
                 <div class="single-list-slider">
-                        <div class="sl-item set-bg" data-setbg="/storage/photos/{{$property->photo}}">
+                        <div class="sl-item set-bg" data-setbg="/storage/{{$property->image}}">
                             <div class="{{$property->rent_sale === 'sale' ? 'sale-notic' : 'rent-notic'}}">For {{$property->rent_sale}}</div>
                         </div>
                 </div>

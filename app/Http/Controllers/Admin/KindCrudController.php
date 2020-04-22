@@ -31,7 +31,7 @@ class KindCrudController extends CrudController
         // TODO: remove setFromDb() and manually define Columns, maybe Filters
         //$this->crud->setFromDb();
         $this->crud->addcolumn(['name' => 'name' , 'label' => 'Name' , 'type' => 'text']);
-        $this->crud->addcolumn(['name' => 'number_of_kinds', 'type' => 'number' , 'label' => 'Properties number' ]);
+        $this->crud->addcolumn(['name' => 'number_of_properties' , 'label' => 'Properties number' , 'type' => 'number']);
     }
 
     protected function setupCreateOperation()
@@ -63,7 +63,7 @@ class KindCrudController extends CrudController
         $this->crud->set('show.setFromDb', false);
 
         $this->crud->addcolumn(['name' => 'name' , 'label' => 'Name' , 'type' => 'text']);
-        $this->crud->addcolumn(['name' => 'number_of_kinds' , 'label' => 'Properties number' , 'type' => 'number']);
+        $this->crud->addcolumn(['name' => 'number_of_properties' , 'label' => 'Properties number' , 'type' => 'number']);
         $this->crud->addColumn([
             'name' => 'image', // The db column name
             'label' => "image", // Table column heading

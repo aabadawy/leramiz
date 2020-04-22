@@ -6,10 +6,18 @@
 		<form class="filter-form">
 			<input type="text" placeholder="Enter a street name, address number or keyword">
 			<select>
-				<option value="City">City</option>
+			@forelse($cities as $city)
+			<option value="City">{{$city->name}}</option>
+			@empty
+			<option value="City">City</option>
+			@endforelse
 			</select>
 			<select>
-				<option value="City">State</option>
+			@forelse($kinds as $kind)
+			<option value="City">{{$kind->name}}</option>
+			@empty
+			<option value="Kind">Kind</option>
+			@endforelse
 			</select>
 			<button class="site-btn fs-submit">SEARCH</button>
 		</form>
@@ -28,7 +36,7 @@
 		@if(count($properties) > 0)
 			@foreach($properties->take(4) as $property)
 				<div class="col-md-6">
-					<div class="propertie-item set-bg" data-setbg="/storage/photos/{{$property->photo}}">
+					<div class="propertie-item set-bg" data-setbg="/storage/{{$property->image}}">
 						<div class="{{$property->rent_sale === 'sale' ? 'sale-notic' :'rent-notic'}} ">For {{$property->rent_sale}}</div>
 						<div class="propertie-info text-white">
 							<div class="info-warp">
@@ -105,7 +113,7 @@
 				<div class="col-lg-4 col-md-6">
 					<!-- feature -->
 					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="/storage/photos/{{$property->photo}}">
+						<div class="feature-pic set-bg" data-setbg="/storage/{{$property->image}}">
 							<div class="{{$property->rent_sale === 'sale' ? 'sale-notic' : 'rent-notic'}}">FOR {{$property->rent_sale === 'sale' ? 'sale' : 'rent'}}</div>
 						</div>
 						<div class="feature-text">

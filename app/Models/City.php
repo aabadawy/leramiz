@@ -19,7 +19,7 @@ class City extends Model
     protected $table = 'cities';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'number_of_properties'];
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
@@ -32,7 +32,7 @@ class City extends Model
     public function setImageAttribute($value)
     {
         $attribute_name = "image";
-        $disk = config('local'); // or use your own disk, defined in config/filesystems.php
+        $disk = config('public'); // or use your own disk, defined in config/filesystems.php
         $destination_path = "public/city_photos/"; // path relative to the disk above
 
         // if the image was erased
@@ -72,7 +72,7 @@ class City extends Model
     {
     parent::boot();
     static::deleting(function($obj) {
-    \Storage::disk('local')->delete($obj->image);
+    \Storage::disk('public')->delete($obj->image);
     });
     }
     /*
@@ -80,7 +80,10 @@ class City extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function properties()
+    {
+        return $this->hasMany('App\Models\property');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

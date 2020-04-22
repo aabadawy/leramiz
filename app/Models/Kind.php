@@ -82,7 +82,7 @@ class Kind extends Model
     */
     public function properties()
     {
-        return $this->hasMany('App\Property');
+        return $this->hasMany('App\Models\Property');
     }
     
 

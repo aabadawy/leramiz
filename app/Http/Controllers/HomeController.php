@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Auth;
-use App\Property;
-use App\Detail;
-use App\City;
-use App\Kind;
+use App\Models\Property;
+use App\Models\Detail;
+use App\Models\City;
+use App\Models\Kind;
 class HomeController extends Controller
 {
     /**
