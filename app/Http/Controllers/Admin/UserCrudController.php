@@ -57,7 +57,7 @@ class UserCrudController extends CrudController
         //'password' => Hash::make($data['password']),
         $this->crud->addField([       // SelectMultiple = n-n relationship (with pivot table)
             'label' => "Roles",
-            'type' => 'select_multiple',
+            'type' => 'select2_multiple',
             'name' => 'roles', // the method that defines the relationship in your Model
             'entity' => 'roles', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
@@ -83,7 +83,7 @@ class UserCrudController extends CrudController
         $this->crud->addField(['name' => 'email' , 'type' => 'email' , 'label' => 'E-mail']);
         $this->crud->addField([       // SelectMultiple = n-n relationship (with pivot table)
             'label' => "Roles",
-            'type' => 'select_multiple',
+            'type' => 'select2_multiple',
             'name' => 'roles', // the method that defines the relationship in your Model
             'entity' => 'roles', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user

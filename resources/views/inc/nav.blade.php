@@ -67,10 +67,6 @@
 						<ul class="main-menu">
 							<li><a href="/">Home</a></li>
 							<li><a href="/property">properties</a></li>
-							<li><a href="about.html">ABOUT US</a></li>
-							<li><a href="single-list.html">Pages</a></li>
-							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</div>
 				</div>

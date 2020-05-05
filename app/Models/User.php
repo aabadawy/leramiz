@@ -51,10 +51,6 @@ class User extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function GetPropertiesNumber()
-    {
-        return $this->properties->count();
-    }
 
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = Hash::make($value);

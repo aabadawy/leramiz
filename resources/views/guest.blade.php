@@ -99,6 +99,7 @@
                         <p><i class="fa fa-envelope"></i>{{$user->email}}</p>
                     </div>
                 </div>
+                @if(Auth::user()->id != $user->id)
                 <div class="contact-form-card">
                     <h5>Do you have any question?</h5>
                     <form>
@@ -108,7 +109,7 @@
                         <button>SEND</button>
                     </form>
                 </div>
-                
+                @endif
             </div>
         </div>
     </div>
