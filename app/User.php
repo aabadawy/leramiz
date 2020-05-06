@@ -50,5 +50,8 @@ class User extends Authenticatable
     {
        return $this->hasMany('App\Models\Property');
     }
-
+    public function isAdmin()
+    {
+        return $this->roles->contains('name' , 'Admin');
+    }
 }

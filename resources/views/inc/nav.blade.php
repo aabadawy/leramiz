@@ -67,6 +67,11 @@
 						<ul class="main-menu">
 							<li><a href="/">Home</a></li>
 							<li><a href="/property">properties</a></li>
+							@if(!auth::guest())
+								@if(auth::user()->isAdmin())
+									<li><a href="/admin">Admin Page</a></li>
+								@endif
+							@endif
 						</ul>
 					</div>
 				</div>

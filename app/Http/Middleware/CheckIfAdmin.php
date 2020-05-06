@@ -56,8 +56,8 @@ class CheckIfAdmin
         // Here I changed The Way that function check is the user is Admin or not.
         
         if(!auth()->guest()){
-            if (!auth()->user()->roles->contains('name' , 'Admin') && 
-                !auth()->user()->roles->contains('name' , 'Data Entry')) {
+            if (!auth()->user()->isAdmin())
+            {
                 return $this->respondToUnauthorizedRequest($request);
             }
             
