@@ -1,4 +1,4 @@
-@if(count($cities) == 4)
+@if(count($cities) >= 4)
     <a href="/property?city={{$cities[0]->name}}" class="gallery-item grid-long set-bg" data-setbg="/storage/{{$cities[0]->image}}">
         <div class="gi-info">
             <h3>{{$cities[0]->name}}</h3>

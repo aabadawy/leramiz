@@ -29,9 +29,9 @@ class HomeController extends Controller
     public function index()
     {
         $properties = Property::orderBy('created_at' ,'desc')->get();
-        $cities = City::orderBy('number_of_properties' , 'desc')->take(4)->get();;
+        $cities = City::orderBy('number_of_properties' , 'desc')->get();
+        $kinds = Kind::orderBy('number_of_properties' , 'desc')->get();
 
-        $kinds = Kind::all();
         return view('index',[
             'properties' => $properties,
             'kinds' => $kinds,

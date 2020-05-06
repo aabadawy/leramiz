@@ -32,7 +32,9 @@
 							@foreach($cities->take(4) as $city)
 								<li><a href="/property?city={{$city->name}}">{{$city->name}}</a></li>
 							@endforeach
-							<li> <b> <a href="#" class="btn btn-success"> See all</a></b></li>
+							@if(count($cities) >= 4)
+								<li> <b> <a id="all_cities" class="btn btn-success" data-toggle="modal" data-target=".all_cities"> See all</a></b></li>
+							@endif
 						</ul>
 				</div>
 			</div>
@@ -66,5 +68,15 @@
 		</div>
 	</div>
 </footer>
-
+<div class="modal fade all_cities" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<ul class="list-group">
+			@foreach($cities as $city)
+				<li class="list-group-item text-center"><a href="/property?city={{$city->name}}" class=" text-success">{{$city->name}}</a></li>
+			@endforeach
+			</ul>
+		</div>
+	</div>
+</div>
 <!-- Footer section end -->
