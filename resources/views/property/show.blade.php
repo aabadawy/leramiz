@@ -75,16 +75,27 @@
                         <p><i class="fa fa-envelope"></i>{{$property->user->email}}</p>
                     </div>
                 </div>
-                @if(Auth::user()->id != $property->user->id)
-                <div class="contact-form-card">
-                    <h5>Do you have any question?</h5>
-                    <form>
-                        <input type="text" placeholder="Your name">
-                        <input type="text" placeholder="Your email">
-                        <textarea placeholder="Your question"></textarea>
-                        <button>SEND</button>
-                    </form>
-                </div>
+                @if(!Auth::guest())
+                    @if(Auth::user()->id != $property->user->id)
+                    <div class="contact-form-card">
+                        <h5>Do you have any question?</h5>
+                        <form>
+                            <textarea placeholder="Your question"></textarea>
+                            <p class="text-danger text-xs text-center">It will be send with your register name & email</p>
+                            <button id="send_email" type="button">SEND</button>
+                        </form>
+                    </div>
+                    @endif
+                    @else
+                    <div class="contact-form-card">
+                        <h5>Do you have any question?</h5>
+                        <form>
+                            <input type="text" placeholder="Your name">
+                            <input type="text" placeholder="Your email">
+                            <textarea placeholder="Your question"></textarea>
+                            <button id="send_email" type="button">SEND</button>
+                        </form>
+                    </div>
                 @endif
             </div>
         </div>
@@ -101,4 +112,11 @@
 <!-- load for map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0YyDTa0qqOjIerob2VTIwo_XVMhrruxo"></script>
 <script src="js/map-2.js"></script>
+<script>
+$(document).ready(function(){
+    $("#send_email").click(function(){
+        alert("You sent Email!");
+    });
+});
+</script>
 @endsection()

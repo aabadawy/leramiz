@@ -27,7 +27,6 @@
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
 	<script src="{{ asset('js/app.js') }}" ></script>
 
 	<!--[if lt IE 9]>

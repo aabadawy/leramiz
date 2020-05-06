@@ -127,17 +127,7 @@
 		</div>
 		<div class="gallery">
 			<div class="grid-sizer"></div>
-			@forelse($cities as $city)
-				<a href="/property?city={{$city->name}}" class="gallery-item  set-bg" data-setbg="/storage/{{$city->image}}">
-					<div class="gi-info">
-						<h3>{{$city->name}}</h3>
-						<p>{{$city->number_of_properties}}</p>
-					</div>
-				</a>
-			@empty
-				<p class="text-center-danger">No Citites add!</p>
-			@endforelse
-			
+			@include('inc.cities')
 		</div>
 	</div>
 </section>
