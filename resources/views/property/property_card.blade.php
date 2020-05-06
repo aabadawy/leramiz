@@ -31,10 +31,10 @@
                 @if(!Auth::guest())
                     @if(Auth::user()->id === $property->user->id)
                     <div class="room-info">
-                        <div class="pull-left">
+                        <div class="rf-left">
                             <p><a href="property/{{$property->id}}/edit" class="btn btn-primary">EDIT</a></p>
                         </div>
-                        <div class="pull-right">
+                        <div class="rf-right">
                                 {{Form::open(['action' =>['PropertiesController@destroy' , $property->id] , 'method' => 'POST'])}}
                                     {{Form::hidden('_method' , 'DELETE')}}
                                     {{Form::submit('Delete' , ['class' => 'btn btn-danger'] )}}

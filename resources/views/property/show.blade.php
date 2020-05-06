@@ -27,6 +27,21 @@
                             <a href="/property/{{$property->id}}" class="price-btn">${{$property->price}}{{$property->rent_sale === 'rent' ? ' / Month' : ''}}</a>
                         </div>
                     </div>
+                    @if(!auth::guest())
+                        @if(Auth::user()->id == $property->user_id)
+                        <div class="row">
+                                <div class="form-control btn btn-sm">
+                                    <p><a href="property/{{$property->id}}/edit" class="btn btn-sm btn-primary form-control">EDIT</a></p>
+                                </div>
+                                <div class="form-control btn btn-sm">
+                                        {{Form::open(['action' =>['PropertiesController@destroy' , $property->id] , 'method' => 'POST'])}}
+                                            {{Form::hidden('_method' , 'DELETE')}}
+                                            {{Form::submit('Delete' , ['class' => 'btn btn-sm  btn-danger form-control'] )}}
+                                        {{Form::close()}}
+                                </div>	
+                        </div>
+                        @endif
+                    @endif
                     <h3 class="sl-sp-title">Property Details</h3>
                     <div class="row property-details-list">
                         <div class="col-md-4 col-sm-6">
