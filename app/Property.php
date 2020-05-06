@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Property extends Model
 {
@@ -31,4 +32,11 @@ class Property extends Model
         return $this->belongsTo('App\Models\kind');
     }
 
+    public function isOwner()
+    {
+        if(Auth::guest())
+            return false ;
+        else
+            return $this->user->id == Auth::user()->id; 
+    }
 }

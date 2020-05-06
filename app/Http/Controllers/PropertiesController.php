@@ -81,7 +81,12 @@ class PropertiesController extends Controller
      */
     public function edit($id)
     {
+
         $property = Property::findOrFail($id);
+        if(!$property->isOwner())
+        {
+            return abort(404);
+        }
         $details = Detail::all()->pluck('name' , 'id');
         return view('property.edit',[
             'property' => $property,
@@ -101,7 +106,10 @@ class PropertiesController extends Controller
         $this->validateProperty($request);
 
         $property = Property::findOrFail($id);
-
+        if(!$property->isOwner())
+        {
+            return abort(404);
+        }
         $this->changingNumberOfProperties($property , $request , $property->city_id);
 
         $this->save($property , $request);
@@ -119,7 +127,10 @@ class PropertiesController extends Controller
     public function destroy($id)
     {
         $property = Property::findOrFail($id);
-
+        if(!$property->isOwner())
+        {
+            return abort(404);
+        }
         Storage::delete('public/' . $property->image);
         $city = City::findOrFail($property->city_id);
         $city->number_of_properties -- ;
