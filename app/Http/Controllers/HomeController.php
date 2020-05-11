@@ -48,18 +48,14 @@ class HomeController extends Controller
         $details = Detail::all()->pluck('name' , 'id');
         $citiess = City::all()->pluck('name' , 'name');
         $kinds = Kind::all()->pluck('name' , 'name');
-        $users = User::all();
         if(Auth::guest())
         {
-                if(Auth::user()->roles->contains('name' , 'Customer') && Auth::user()->id == $user->$id)
-                {
-                    return view('guest',[
-                        'kinds' => $kinds,
-                        'details' => $details,
-                        'citiess' => $citiess,
-                        'user' => $user,
-                    ]);
-                }
+            return view('guest',[
+                'kinds' => $kinds,
+                'details' => $details,
+                'citiess' => $citiess,
+                'user' => $user,
+            ]);
         }
         else
         {

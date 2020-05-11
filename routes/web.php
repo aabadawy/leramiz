@@ -21,4 +21,5 @@ Route::get('/{email}' , 'HomeController@profile');
 //     Route::auth();
 //     Route::get('logout', 'Auth\LoginController@logout');
 // });
-
+Route::post('/contact' , 'ContactController@sendMail');
+Route::post('/contactme' , 'ContactController@contactme');

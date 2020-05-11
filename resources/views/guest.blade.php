@@ -115,16 +115,55 @@
                         <p><i class="fa fa-envelope"></i>{{$user->email}}</p>
                     </div>
                 </div>
-                @if(Auth::user()->id != $user->id)
+                @if(Auth::guest())
                 <div class="contact-form-card">
                     <h5>Do you have any question?</h5>
-                    <form>
-                        <input type="text" placeholder="Your name">
-                        <input type="text" placeholder="Your email">
-                        <textarea placeholder="Your question"></textarea>
-                        <button>SEND</button>
+                    <form action="/contactme"  method="POST">
+                        @csrf
+                        <input type="text" name="name" placeholder="Your name">
+                        @error('name')
+                            <p class="text-danger text-xs">{{$message}}</p>
+                        @enderror
+                        <input type="email" name="email" placeholder="Your email">
+                        @error('email')
+                            <p class="text-danger text-xs">{{$message}}</p>
+                        @enderror
+                        <textarea placeholder="Enter What do you want to say to {{$user->name}}" name="content"></textarea>
+                        @error('content')
+                            <p class="text-danger text-xs">{{$message}}</p>
+                        @enderror
+                        <input type="hidden" name="toemail" value="{{$user->email}}">
+                        @error('toemail')
+                            <p class="text-danger text-xs">There Are something Wrong Please Try Again!</p>
+                        @enderror
+                        @if(session('message'))
+                            <p class="text-success text-xs">{{ session('message')}}</p>
+                        @endif
+                        <button type="submit">SEND</button>
                     </form>
                 </div>
+                @else
+                    @if(Auth::user()->id != $user->id)
+                        <div class="contact-form-card">
+                            <h5>Do you have any question?</h5>
+                            <form method="POST" action="/contactme" > 
+                                @csrf
+                                <p class="text-warning text-xs text-center" name="content">It will be send with your register name & email</p>
+                                <textarea placeholder="Your question" name="content"></textarea>
+                                @error('content')
+                                    <p class="text-danger text-xs">{{$message}}</p>
+                                @enderror
+                                <input type="hidden" name="toemail" value="{{$user->email}}" readonly>
+                                @error('toemail')
+                                    <p class="text-danger text-xs">{{$message}}</p>
+                                @enderror
+                                @if(session('message'))
+                                    <p class="text-success text-xs">{{ session('message')}}</p>
+                                @endif
+                                <button id="send_email" type="submit">SEND</button>
+                            </form>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>

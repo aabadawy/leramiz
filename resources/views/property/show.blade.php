@@ -94,21 +94,49 @@
                     @if(Auth::user()->id != $property->user->id)
                     <div class="contact-form-card">
                         <h5>Do you have any question?</h5>
-                        <form>
-                            <textarea placeholder="Your question"></textarea>
-                            <p class="text-danger text-xs text-center">It will be send with your register name & email</p>
-                            <button id="send_email" type="button">SEND</button>
+                        <form method="POST" action="/contact" > 
+                            @csrf
+                            <p class="text-warning text-xs text-center" name="content">It will be send with your register name & email</p>
+                            <textarea placeholder="Your question" name="content"></textarea>
+                            @error('content')
+                                <p class="text-danger text-xs">{{$message}}</p>
+                            @enderror
+                            <input type="hidden" name="toemail" value="{{$property->user->email}}" readonly>
+                            <input type="hidden" name="propid" value="{{$property->id}}" readonly>
+                            @error('email')
+                                <p class="text-danger text-xs">{{$message}}</p>
+                            @enderror
+                            @if(session('message'))
+                                <p class="text-success text-xs">{{ session('message')}}</p>
+                            @endif
+                            <button id="send_email" type="submit">SEND</button>
                         </form>
                     </div>
                     @endif
                     @else
                     <div class="contact-form-card">
                         <h5>Do you have any question?</h5>
-                        <form>
-                            <input type="text" placeholder="Your name">
-                            <input type="text" placeholder="Your email">
-                            <textarea placeholder="Your question"></textarea>
-                            <button id="send_email" type="button">SEND</button>
+                        <form action="/contact" method="POST">
+                            @csrf
+                            <input type="text" name="name" placeholder="Your name">
+                            @error('name')
+                                <p class="text-danger text-xs">{{$message}}</p>
+                            @enderror
+                            <input type="text" name="email"placeholder="Your email">
+                            @error('email')
+                                <p class="text-danger text-xs">{{$message}}</p>
+                            @enderror
+                            <textarea placeholder="Your question" name="content"></textarea>
+                            @error('content')
+                                <p class="text-danger text-xs">{{$message}}</p>
+                            @enderror
+                            <input type="hidden" name="propid" value="{{$property->id}}">
+                            <input type="hidden" name="toemail" value="{{$property->user->email}}">
+                            @if(session('message'))
+                                <p class="text-success text-xs">{{ session('message')}}</p>
+                            @endif
+
+                            <button id="send_email" type="submit">SEND</button>
                         </form>
                     </div>
                 @endif
@@ -128,10 +156,11 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0YyDTa0qqOjIerob2VTIwo_XVMhrruxo"></script>
 <script src="js/map-2.js"></script>
 <script>
-$(document).ready(function(){
-    $("#send_email").click(function(){
-        alert("You sent Email!");
-    });
-});
+
+// $(document).ready(function(){
+//     $("#send_email").click(function(){
+//         alert("You sent Email!");
+//     });
+// });
 </script>
 @endsection()
